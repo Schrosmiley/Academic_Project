@@ -4,7 +4,7 @@
 #define MAX_NODES 50
 int n, e, nodeCount = 0, src, destination, visa, x, valid = 0;
 static int totalPath = 0;
-int visited[MAX_NODES], vis_cost[MAX_NODES], visit_count = 0, pathCost[MAX_NODES], minPathIndex;
+int visited[MAX_NODES], vis_cost[MAX_NODES], visit_count = 0, pathCost[MAX_NODES], minPathIndex = -1;
 int paths[MAX_NODES][50];
 
 // Definition of a structure to represent a node in the graph
@@ -77,7 +77,7 @@ void add_path()
     paths[totalPath][i] = src;
     for (i = 1; j < visit_count; i++, j++)
     {
-        cost += vis_cost[i];
+        cost += vis_cost[j];
         paths[totalPath][i] = visited[j];
     }
     paths[totalPath][i] = -1; // Mark the end of the path
@@ -114,6 +114,21 @@ int can_go(int v)
 int minCost()
 {
     int ans = 10000000; // Initialize the answer with a large value
+    printf("All cost : ");
+    for (int i = 0; i < totalPath; i++)
+    {
+        printf("%d ",pathCost[i]);
+        if (pathCost[i] < ans)
+        {
+            ans = pathCost[i]; // Update the answer if a lower cost path is found
+            minPathIndex = i; // Store the index of the minimum cost path
+        }
+    }
+    printf("\n");
+    return ans;
+}
+void MinpathIndex(){
+    int ans = 10000000; // Initialize the answer with a large value
     for (int i = 0; i < totalPath; i++)
     {
         if (pathCost[i] < ans)
@@ -122,9 +137,7 @@ int minCost()
             minPathIndex = i; // Store the index of the minimum cost path
         }
     }
-    return ans;
 }
-
 // Function to find all paths from start to end
 void findPath(int start, int end)
 {
@@ -259,6 +272,9 @@ int main()
                         {
                             printf("The Path with Minimum Cost : ");
                             int j = 0;
+                            if(minPathIndex == -1){
+                                MinpathIndex();
+                            }
                             while (paths[minPathIndex][j] != -1)
                             {
                                 printf("%d ", paths[minPathIndex][j++]); // Print the path with the minimum cost
@@ -276,10 +292,9 @@ int main()
                         break;
 
                     case 6:
-                        printf("\n\n\t\t\tThank You!\n\n\n");
+                        printf("\n\n\t\t\tThank You Sir!\n\n\n");
                         exit(0); // Exit the program
                         break;
-
                     default:
                         printf("\t\tInvalid choice\n");
         }
