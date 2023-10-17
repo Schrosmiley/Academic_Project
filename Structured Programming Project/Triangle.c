@@ -5,8 +5,8 @@
 #define MAX_TRIANGLES 100
 
 int n, e, nodeCount = 0,minCostTrianlgeIndex = -1,minCost = 1000000;
-int visited[MAX_NODES], visit_count = 0;
-int valid = 0;
+int visited[MAX_NODES], visit_count = 0; 
+int valid = 0,flag = 0;
 
 // Definition of a structure to represent a node in the graph
 struct Node
@@ -108,6 +108,7 @@ void determineIndex(){
 }
 // Function to count triangles in the graph
 void countTriangles() {
+    flag = 1;
     for (int i = 0; i < nodeCount; i++) {
         for (int j = i + 1; j < nodeCount; j++) {
             for (int k = j + 1; k < nodeCount; k++) {
@@ -161,11 +162,16 @@ int main() {
 
             case 3:
                 if(valid == 1){
-                    printf("\n\tTriangles:\n");
-                    for (int i = 0; i < count_Triangle; i++) {
-                        printf("\t\tTriangle %d: %d %d %d\n", i + 1, triangles[i][0], triangles[i][1], triangles[i][2]);
+                    if(flag == 0){
+                        printf("\n\t\tPlease first Count the Triangles.\n");
                     }
-                    printf("\n");
+                    else{
+                        printf("\n\tTriangles:\n");
+                        for (int i = 0; i < count_Triangle; i++) {
+                            printf("\t\tTriangle %d: %d %d %d\n", i + 1, triangles[i][0], triangles[i][1], triangles[i][2]);
+                        }
+                        printf("\n");
+                    }
                 }
                 else{
                     printf("\n\t\tPlease construct the Graph first.\n");
@@ -173,9 +179,14 @@ int main() {
                 break;
             case 4 : 
                     if(valid == 1){
-                        calMinCost();
-                        printf("\n\t\tMinimum Cost among all : %d\n",minCost);
-                        printf("\n");
+                        if(flag == 0){
+                            printf("\n\t\tPlease first Count the Triangles.\n");
+                        }
+                        else{
+                            calMinCost();
+                            printf("\n\t\tMinimum Cost among all : %d\n",minCost);
+                            printf("\n");
+                        }
                     }
                     else{
                         printf("\n\t\tPlease construct the Graph first.\n");
@@ -183,14 +194,19 @@ int main() {
                     break;
             case 5:
                     if(valid == 1){
-                        if(minCostTrianlgeIndex == -1){
+                        if(flag == 0){
+                            printf("\n\t\tPlease first Count the Triangles.\n");
+                        }
+                        else {
+                            if(minCostTrianlgeIndex == -1){
                             determineIndex();
+                            }
+                            printf("\n\t\tThe Triangle with the Minimum Cost : ");
+                            for(int i = 0;i<3;i++){
+                                printf("%d ",triangles[minCostTrianlgeIndex][i]);
+                            }
+                            printf("\n");
                         }
-                        printf("\n\t\tThe Triangle with the Minimum Cost : ");
-                        for(int i = 0;i<3;i++){
-                            printf("%d ",triangles[minCostTrianlgeIndex][i]);
-                        }
-                        printf("\n");
                     }
                     else{
                         printf("\n\t\tPlease construct the Graph first.\n");

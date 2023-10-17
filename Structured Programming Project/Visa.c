@@ -173,20 +173,19 @@ int main()
     system("Color 3F");
     printf("\n\n");
     printf("\t\t\t***************************************************************************\n");
-    printf("\t\t\t*                    Possible Path with Visa                              *              \n");
+    printf("\t\t\t*                    Possible Route with Visa                              *              \n");
     printf("\t\t\t***************************************************************************\n\n\n");
     int choice, flag = 0;
     printf("\n1. Construct The Graph\n");
-    printf("2. Number of Path with Visa\n");
-    printf("3. Print all the Path\n");
+    printf("2. Number of possible Route with Visa\n");
+    printf("3. Print all the Route\n");
     printf("4. Minimum Cost to Reach the Destination\n");
-    printf("5. Print The Minimum cost Path\n");
+    printf("5. Print The Minimum cost Route\n");
     printf("6. Exit\n");
     while (choice)
     {
         printf("\n\tPlease Enter Your Choice : ");
         scanf("%d", &choice);
-
         switch (choice)
         {
             case 1:
@@ -195,7 +194,6 @@ int main()
                 else
                     printf("\t\tGraph is already read.");
                 break;
-
             case 2:
                 if (valid)
                 {
