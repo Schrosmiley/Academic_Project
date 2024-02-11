@@ -9,7 +9,7 @@ struct treenode
 void print(struct treenode *root)
 {
     if(root==NULL)
-    return ;
+        return ;
     printf("%d ",root->val);
     print(root->left);
     print(root->right);
