@@ -4,13 +4,12 @@
 #define MAX_NODES 50
 #define MAX_TRIANGLES 100
 
-int n, e, nodeCount = 0,minCostTrianlgeIndex = -1,minCost = 1000000;
-int visited[MAX_NODES], visit_count = 0; 
-int valid = 0,flag = 0;
+int n, e, nodeCount = 0, minCostTrianlgeIndex = -1, minCost = 1000000;
+int visited[MAX_NODES], visit_count = 0;
+int valid = 0, flag = 0;
 
 // Definition of a structure to represent a node in the graph
-struct Node
-{
+struct Node {
     int nodeid;
     int adjcount, visaCount;
     int adjs[10]; // Array to store adjacent nodes
@@ -25,12 +24,9 @@ int costs[MAX_NODES];
 int count_Triangle = 0;
 
 // Function to add a new node to the graph
-void addNode(int nid)
-{
-    for (int i = 0; i < nodeCount; i++)
-    {
-        if (arr[i].nodeid == nid)
-        {
+void addNode(int nid) {
+    for (int i = 0; i < nodeCount; i++) {
+        if (arr[i].nodeid == nid) {
             return; // Node already exists, so return
         }
     }
@@ -38,13 +34,11 @@ void addNode(int nid)
     arr[nodeCount].adjcount = 0;
     nodeCount++;
 }
+
 // Function to add an adjacent node to an existing node
-void addAdjacent(int u, int v, int cost)
-{
-    for (int i = 0; i < nodeCount; i++)
-    {
-        if (arr[i].nodeid == u)
-        {
+void addAdjacent(int u, int v, int cost) {
+    for (int i = 0; i < nodeCount; i++) {
+        if (arr[i].nodeid == u) {
             int c = arr[i].adjcount;
             arr[i].adjs[c] = v; // Add the adjacent node
             arr[i].costs[c] = cost; // Add the cost associated with the edge
@@ -53,17 +47,16 @@ void addAdjacent(int u, int v, int cost)
         }
     }
 }
+
 // Function to read the graph data from the user
-void read_graph()
-{
+void read_graph() {
     valid = 1;
     printf("\t\tEnter the number of nodes : ");
     scanf("%d", &n);
     printf("\t\tEnter the number of edges : ");
     scanf("%d", &e);
     printf("\t\tEnter graph data(u,v,cost) : ");
-    for (int i = 0; i < e; i++)
-    {
+    for (int i = 0; i < e; i++) {
         int u, v, c;
         scanf("%d %d %d", &u, &v, &c);
         addNode(u); // Add node 'u' if it doesn't exist
@@ -72,6 +65,7 @@ void read_graph()
         addAdjacent(v, u, c); // Add the reverse edge (v, u) with the same cost
     }
 }
+
 // Function to check if two nodes are adjacent
 int isAdjacent(int u, int v) {
     for (int i = 0; i < arr[u].adjcount; i++) {
@@ -81,7 +75,8 @@ int isAdjacent(int u, int v) {
     }
     return 0; // Nodes are not adjacent
 }
-int calCost(int u,int v){
+
+int calCost(int u, int v) {
     for (int i = 0; i < arr[u].adjcount; i++) {
         if (arr[u].adjs[i] == arr[v].nodeid) {
             return arr[u].costs[i];
@@ -89,23 +84,25 @@ int calCost(int u,int v){
     }
     return 0;
 }
-/// @brief 
-void calMinCost(){
-    for(int i=0;i<count_Triangle;i++){
-        if(costs[i] < minCost){
+
+void calMinCost() {
+    for (int i = 0; i < count_Triangle; i++) {
+        if (costs[i] < minCost) {
             minCost = costs[i];
             minCostTrianlgeIndex = i;
         }
     }
 }
-void determineIndex(){
-    for(int i=0;i<count_Triangle;i++){
-        if(costs[i] < minCost){
+
+void determineIndex() {
+    for (int i = 0; i < count_Triangle; i++) {
+        if (costs[i] < minCost) {
             minCost = costs[i];
             minCostTrianlgeIndex = i;
         }
     }
 }
+
 // Function to count triangles in the graph
 void countTriangles() {
     flag = 1;
@@ -116,7 +113,7 @@ void countTriangles() {
                     triangles[count_Triangle][0] = arr[i].nodeid;
                     triangles[count_Triangle][1] = arr[j].nodeid;
                     triangles[count_Triangle][2] = arr[k].nodeid;
-                    costs[count_Triangle] = calCost(i,j) + calCost(j,k) + calCost(k,i);
+                    costs[count_Triangle] = calCost(i, j) + calCost(j, k) + calCost(k, i);
                     count_Triangle++;
                 }
             }
@@ -144,78 +141,71 @@ int main() {
 
         switch (choice) {
             case 1:
-                if(valid == 0)
-                read_graph(); // Read the graph data from the user
+                if (valid == 0)
+                    read_graph(); // Read the graph data from the user
                 else
-                printf("\n\t\tGraph is already read.");
+                    printf("\n\t\tGraph is already read.");
                 break;
 
             case 2:
-                if(valid == 1){
+                if (valid == 1) {
                     countTriangles(); // Count the triangles in the graph
                     printf("\n\t\tTotal triangles : %d\n\n", count_Triangle);
-                }
-                else{
+                } else {
                     printf("\n\t\tPlease construct the Graph first.\n");
                 }
                 break;
 
             case 3:
-                if(valid == 1){
-                    if(flag == 0){
+                if (valid == 1) {
+                    if (flag == 0) {
                         printf("\n\t\tPlease first Count the Triangles.\n");
-                    }
-                    else{
+                    } else {
                         printf("\n\tTriangles:\n");
                         for (int i = 0; i < count_Triangle; i++) {
                             printf("\t\tTriangle %d: %d %d %d\n", i + 1, triangles[i][0], triangles[i][1], triangles[i][2]);
                         }
                         printf("\n");
                     }
-                }
-                else{
+                } else {
                     printf("\n\t\tPlease construct the Graph first.\n");
                 }
                 break;
-            case 4 : 
-                    if(valid == 1){
-                        if(flag == 0){
-                            printf("\n\t\tPlease first Count the Triangles.\n");
-                        }
-                        else{
-                            calMinCost();
-                            printf("\n\t\tMinimum Cost among all : %d\n",minCost);
-                            printf("\n");
-                        }
+            case 4:
+                if (valid == 1) {
+                    if (flag == 0) {
+                        printf("\n\t\tPlease first Count the Triangles.\n");
+                    } else {
+                        calMinCost();
+                        printf("\n\t\tMinimum Cost among all : %d\n", minCost);
+                        printf("\n");
                     }
-                    else{
-                        printf("\n\t\tPlease construct the Graph first.\n");
-                    }
-                    break;
+                } else {
+                    printf("\n\t\tPlease construct the Graph first.\n");
+                }
+                break;
             case 5:
-                    if(valid == 1){
-                        if(flag == 0){
-                            printf("\n\t\tPlease first Count the Triangles.\n");
-                        }
-                        else {
-                            if(minCostTrianlgeIndex == -1){
+                if (valid == 1) {
+                    if (flag == 0) {
+                        printf("\n\t\tPlease first Count the Triangles.\n");
+                    } else {
+                        if (minCostTrianlgeIndex == -1) {
                             determineIndex();
-                            }
-                            printf("\n\t\tThe Triangle with the Minimum Cost : ");
-                            for(int i = 0;i<3;i++){
-                                printf("%d ",triangles[minCostTrianlgeIndex][i]);
-                            }
-                            printf("\n");
                         }
+                        printf("\n\t\tThe Triangle with the Minimum Cost : ");
+                        for (int i = 0; i < 3; i++) {
+                            printf("%d ", triangles[minCostTrianlgeIndex][i]);
+                        }
+                        printf("\n");
                     }
-                    else{
-                        printf("\n\t\tPlease construct the Graph first.\n");
-                    }
-                    break;
+                } else {
+                    printf("\n\t\tPlease construct the Graph first.\n");
+                }
+                break;
             case 6:
-                    printf("\n\n\t\t\tThank You Sir!\n\n\n");
-                    exit(0); // Exit the program
-                    break;
+                printf("\n\n\t\t\tThank You Sir!\n\n\n");
+                exit(0); // Exit the program
+                break;
             default:
                 printf("\t\tInvalid choice\n");
         }

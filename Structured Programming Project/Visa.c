@@ -1,15 +1,16 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+
 #define MAX_NODES 50
+
 int n, e, nodeCount = 0, src, destination, visa, x, valid = 0;
 static int totalPath = 0;
 int visited[MAX_NODES], vis_cost[MAX_NODES], visit_count = 0, pathCost[MAX_NODES], minPathIndex = -1;
 int paths[MAX_NODES][50];
 
 // Definition of a structure to represent a node in the graph
-struct Node
-{
+struct Node {
     int nodeid;
     int adjcount, visaCount;
     int adjs[10]; // Array to store adjacent nodes
@@ -20,12 +21,9 @@ struct Node
 struct Node arr[MAX_NODES]; // Array to store nodes in the graph
 
 // Function to add a new node to the graph
-void addNode(int nid)
-{
-    for (int i = 0; i < nodeCount; i++)
-    {
-        if (arr[i].nodeid == nid)
-        {
+void addNode(int nid) {
+    for (int i = 0; i < nodeCount; i++) {
+        if (arr[i].nodeid == nid) {
             return; // Node already exists, so return
         }
     }
@@ -35,12 +33,9 @@ void addNode(int nid)
 }
 
 // Function to add an adjacent node to an existing node
-void addAdjacent(int u, int v, int cost)
-{
-    for (int i = 0; i < nodeCount; i++)
-    {
-        if (arr[i].nodeid == u)
-        {
+void addAdjacent(int u, int v, int cost) {
+    for (int i = 0; i < nodeCount; i++) {
+        if (arr[i].nodeid == u) {
             int c = arr[i].adjcount;
             arr[i].adjs[c] = v; // Add the adjacent node
             arr[i].costs[c] = cost; // Add the cost associated with the edge
@@ -51,16 +46,14 @@ void addAdjacent(int u, int v, int cost)
 }
 
 // Function to read the graph data from the user
-void read_graph()
-{
+void read_graph() {
     valid = 1;
     printf("\t\tEnter the number of nodes : ");
     scanf("%d", &n);
     printf("\t\tEnter the number of edges : ");
     scanf("%d", &e);
     printf("\t\tEnter graph data(u,v,cost) : ");
-    for (int i = 0; i < e; i++)
-    {
+    for (int i = 0; i < e; i++) {
         int u, v, c;
         scanf("%d %d %d", &u, &v, &c);
         addNode(u); // Add node 'u' if it doesn't exist
@@ -71,12 +64,10 @@ void read_graph()
 }
 
 // Function to add a path to the paths array
-void add_path()
-{
+void add_path() {
     int i = 0, j = 0, cost = 0;
     paths[totalPath][i] = src;
-    for (i = 1; j < visit_count; i++, j++)
-    {
+    for (i = 1; j < visit_count; i++, j++) {
         cost += vis_cost[j];
         paths[totalPath][i] = visited[j];
     }
@@ -87,10 +78,8 @@ void add_path()
 }
 
 // Function to check if a node is visited
-int is_visited(int x)
-{
-    for (int i = 0; i < visit_count; i++)
-    {
+int is_visited(int x) {
+    for (int i = 0; i < visit_count; i++) {
         if (visited[i] == x)
             return 1; // Node is already visited
     }
@@ -98,12 +87,9 @@ int is_visited(int x)
 }
 
 // Function to check if a node can be visited based on visa
-int can_go(int v)
-{
-    for (int i = 0; i < arr[src].visaCount; i++)
-    {
-        if (arr[src].visas[i] == v)
-        {
+int can_go(int v) {
+    for (int i = 0; i < arr[src].visaCount; i++) {
+        if (arr[src].visas[i] == v) {
             return 1; // Node can be visited based on visa
         }
     }
@@ -111,15 +97,12 @@ int can_go(int v)
 }
 
 // Function to find the minimum cost among all paths
-int minCost()
-{
+int minCost() {
     int ans = 10000000; // Initialize the answer with a large value
     printf("All cost : ");
-    for (int i = 0; i < totalPath; i++)
-    {
+    for (int i = 0; i < totalPath; i++) {
         printf("%d ",pathCost[i]);
-        if (pathCost[i] < ans)
-        {
+        if (pathCost[i] < ans) {
             ans = pathCost[i]; // Update the answer if a lower cost path is found
             minPathIndex = i; // Store the index of the minimum cost path
         }
@@ -127,38 +110,32 @@ int minCost()
     printf("\n");
     return ans;
 }
-void MinpathIndex(){
+
+void MinpathIndex() {
     int ans = 10000000; // Initialize the answer with a large value
-    for (int i = 0; i < totalPath; i++)
-    {
-        if (pathCost[i] < ans)
-        {
+    for (int i = 0; i < totalPath; i++) {
+        if (pathCost[i] < ans) {
             ans = pathCost[i]; // Update the answer if a lower cost path is found
             minPathIndex = i; // Store the index of the minimum cost path
         }
     }
 }
+
 // Function to find all paths from start to end
-void findPath(int start, int end)
-{
-    if (visited[visit_count - 1] == end)
-    {
+void findPath(int start, int end) {
+    if (visited[visit_count - 1] == end) {
         add_path(); // If the destination is reached, add the path to the paths array
     }
     int index = 0;
-    for (int i = 0; i < nodeCount; i++)
-    {
-        if (arr[i].nodeid == start)
-        {
+    for (int i = 0; i < nodeCount; i++) {
+        if (arr[i].nodeid == start) {
             index = i;
             break;
         }
     }
 
-    for (int i = 0; i < arr[index].adjcount; i++)
-    {
-        if (!is_visited(arr[index].adjs[i]) && can_go(arr[index].adjs[i]))
-        {
+    for (int i = 0; i < arr[index].adjcount; i++) {
+        if (!is_visited(arr[index].adjs[i]) && can_go(arr[index].adjs[i])) {
             visited[visit_count] = arr[index].adjs[i];
             vis_cost[visit_count++] = arr[index].costs[i];
             findPath(arr[index].adjs[i], end); // Recursively explore the adjacent nodes
@@ -168,8 +145,7 @@ void findPath(int start, int end)
 }
 
 // The main function
-int main()
-{
+int main() {
     system("Color 3F");
     printf("\n\n");
     printf("\t\t\t***************************************************************************\n");
@@ -182,12 +158,10 @@ int main()
     printf("4. Minimum Cost to Reach the Destination\n");
     printf("5. Print The Minimum cost Route\n");
     printf("6. Exit\n");
-    while (choice)
-    {
+    while (choice) {
         printf("\n\tPlease Enter Your Choice : ");
         scanf("%d", &choice);
-        switch (choice)
-        {
+        switch (choice) {
             case 1:
                 if (valid == 0)
                     read_graph(); // Read the graph data from the user
@@ -195,8 +169,7 @@ int main()
                     printf("\t\tGraph is already read.");
                 break;
             case 2:
-                if (valid)
-                {
+                if (valid) {
                     flag = 1;
                     printf("\t\tPlease enter the source : ");
                     scanf("%d", &src);
@@ -205,8 +178,7 @@ int main()
                     arr[src].visaCount = visa;
                     printf("\n\t\tPlease enter all the visa of %d : ", src);
                     // Loop to read the visa information for the source node
-                    for (int i = 0; i < visa; i++)
-                    {
+                    for (int i = 0; i < visa; i++) {
                         scanf("%d", &x);
                         arr[src].visas[i] = x;
                     }
@@ -215,86 +187,66 @@ int main()
                     scanf("%d", &destination);
                     findPath(src, destination); // Find all paths from source to destination
                     printf("\n\t\tYou Can Go Your destination by : %d ways\n\n", totalPath);
+                } else {
+                    printf("\n\t\tPlease construct the Graph first.\n");
+                }
+                break;
+
+            case 3:
+                if (valid == 1 && flag) {
+                    printf("\n\tPaths :\n");
+                    for (int i = 0; i < totalPath; i++) {
+                        int j = 0;
+                        printf("\t\tPath %d : ", i + 1);
+                        while (paths[i][j] != -1) {
+                            if (paths[i][j] != -1)
+                                printf("%d ", paths[i][j++]);
+                        }
+                        printf("\n");
                     }
-                    else
-                    {
-                        printf("\n\t\tPlease construct the Graph first.\n");
+                    printf("\n\n");
+                } else if (valid == 0) {
+                    printf("\n\t\tPlease construct the Graph first.\n");
+                } else {
+                    printf("\n\t\tPlease fix your Destination first.\n");
+                }
+                break;
+
+            case 4:
+                if (valid && flag) {
+                    printf("Minimum Cost to Reach Your destination : %d\n", minCost()); // Find and print the minimum cost to reach the destination
+                    printf("\n\n");
+                } else if (valid == 0) {
+                    printf("\n\t\tPlease construct the Graph first.\n");
+                } else {
+                    printf("\n\t\tPlease fix your Destination first.\n");
+                }
+                break;
+
+            case 5:
+                if (valid && flag) {
+                    printf("The Path with Minimum Cost : ");
+                    int j = 0;
+                    if (minPathIndex == -1) {
+                        MinpathIndex();
                     }
-                    break;
+                    while (paths[minPathIndex][j] != -1) {
+                        printf("%d ", paths[minPathIndex][j++]); // Print the path with the minimum cost
+                    }
+                    printf("\n\n");
+                } else if (valid == 0) {
+                    printf("\n\t\tPlease construct the Graph first.\n");
+                } else {
+                    printf("\n\t\tPlease fix your Destination first.\n");
+                }
+                break;
 
-                    case 3:
-                        if (valid == 1 && flag)
-                        {
-                            printf("\n\tPaths :\n");
-                            for (int i = 0; i < totalPath; i++)
-                            {
-                                int j = 0;
-                                printf("\t\tPath %d : ", i + 1);
-                                while (paths[i][j] != -1)
-                                {
-                                    if (paths[i][j] != -1)
-                                        printf("%d ", paths[i][j++]);
-                                }
-                                printf("\n");
-                            }
-                            printf("\n\n");
-                        }
-                        else if (valid == 0)
-                        {
-                            printf("\n\t\tPlease construct the Graph first.\n");
-                        }
-                        else
-                        {
-                            printf("\n\t\tPlease fix your Destination first.\n");
-                        }
-                        break;
-
-                    case 4:
-                        if (valid && flag)
-                        {
-                            printf("Minimum Cost to Reach Your destination : %d\n", minCost()); // Find and print the minimum cost to reach the destination
-                            printf("\n\n");
-                        }
-                        else if (valid == 0)
-                        {
-                            printf("\n\t\tPlease construct the Graph first.\n");
-                        }
-                        else
-                        {
-                            printf("\n\t\tPlease fix your Destination first.\n");
-                        }
-                        break;
-
-                    case 5:
-                        if (valid && flag)
-                        {
-                            printf("The Path with Minimum Cost : ");
-                            int j = 0;
-                            if(minPathIndex == -1){
-                                MinpathIndex();
-                            }
-                            while (paths[minPathIndex][j] != -1)
-                            {
-                                printf("%d ", paths[minPathIndex][j++]); // Print the path with the minimum cost
-                            }
-                            printf("\n\n");
-                        }
-                        else if (valid == 0)
-                        {
-                            printf("\n\t\tPlease construct the Graph first.\n");
-                        }
-                        else
-                        {
-                            printf("\n\t\tPlease fix your Destination first.\n");
-                        }
-                        break;
-
-                    case 6:
-                        printf("\n\n\t\t\tThank You Sir!\n\n\n");
-                        exit(0); // Exit the program
-                        break;
-                    default:
-                        printf("\t\tInvalid choice\n");
+            case 6:
+                printf("\n\n\t\t\tThank You Sir!\n\n\n");
+                exit(0); // Exit the program
+                break;
+            default:
+                printf("\t\tInvalid choice\n");
         }
     }
     return 0;

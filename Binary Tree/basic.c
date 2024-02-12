@@ -1,21 +1,21 @@
-#include<stdio.h>
-#include<stdlib.h>
-struct treenode
-{
+#include <stdio.h>
+#include <stdlib.h>
+
+struct treenode {
     int val;
     struct treenode *left;
     struct treenode *right;
 };
-void print(struct treenode *root)
-{
-    if(root==NULL)
-        return ;
-    printf("%d ",root->val);
+
+void print(struct treenode *root) {
+    if (root == NULL)
+        return;
+    printf("%d ", root->val);
     print(root->left);
     print(root->right);
 }
-int main()
-{
+
+int main() {
     struct treenode *root = (struct treenode *)malloc(sizeof(struct treenode));
     struct treenode *a = (struct treenode *)malloc(sizeof(struct treenode));
     struct treenode *b = (struct treenode *)malloc(sizeof(struct treenode));
@@ -23,6 +23,7 @@ int main()
     struct treenode *d = (struct treenode *)malloc(sizeof(struct treenode));
     struct treenode *e = (struct treenode *)malloc(sizeof(struct treenode));
     struct treenode *f = (struct treenode *)malloc(sizeof(struct treenode));
+
     root->val = 10;
     a->val = 20;
     b->val = 30;
@@ -30,12 +31,14 @@ int main()
     d->val = 50;
     e->val = 60;
     f->val = 70;
+
     root->left = a;
     root->right = b;
     a->left = c;
     a->right = d;
     b->left = e;
     b->right = f;
+
     c->left = NULL;
     c->right = NULL;
     d->left = NULL;
@@ -44,6 +47,8 @@ int main()
     e->right = NULL;
     f->left = NULL;
     f->right = NULL;
+
     print(root);
+
     return 0;
 }
