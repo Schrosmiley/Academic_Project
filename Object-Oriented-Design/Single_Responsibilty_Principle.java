@@ -1,8 +1,15 @@
+//****************************************************************************
+// Title : Demonstrating the Single Responsibility Principle (SRP) in Java
+// Author: Sarafat Karim
+//         Undergraduate Student
+//         Khulna University
+//****************************************************************************
+
+
 /**
  * This class represents an EmailSender responsible for sending emails.
  */
 class EmailSender {
-
     /**
      * Sends an email to the specified recipient with the given subject and message.
      *
