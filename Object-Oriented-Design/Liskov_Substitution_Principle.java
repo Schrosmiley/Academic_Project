@@ -1,5 +1,5 @@
 //****************************************************************************
-// Title : Demonstrating the Liskov Substitution Principle (LSP) in Java
+// Title : Demonstrating the Liskov Substitution Principle (LSP)
 // Author: Sarafat Karim
 //         Undergraduate Student
 //         Khulna University
@@ -84,7 +84,7 @@ class AreaCalculator {
 /**
  * Demonstrates the usage of shapes and area calculation.
  */
-class LSPDemo {
+class LSP {
     public static void main(String[] args) {
         Shape[] shapes = {
             new Rectangle(5, 4),

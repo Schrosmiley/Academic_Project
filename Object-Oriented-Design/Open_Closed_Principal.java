@@ -1,5 +1,5 @@
 //****************************************************************************
-// Title : Demonstrating the Open/Closed Principle (OCP) in Java
+// Title : Demonstrating the Open/Closed Principle (OCP)
 // Author: Sarafat Karim
 //         Undergraduate Student
 //         Khulna University
@@ -84,7 +84,7 @@ class AreaCalculator {
 /**
  * Demonstrates the usage of shapes and area calculation.
  */
-class Open_Closed_Principal {
+class OCP {
     public static void main(String[] args) {
         Shape[] shapes = {
             new Rectangle(5, 4),

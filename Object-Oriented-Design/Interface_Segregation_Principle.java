@@ -1,5 +1,5 @@
 //****************************************************************************
-// Title : Demonstrating the Interface Segregation Principle (ISP) in Java
+// Title : Demonstrating the Interface Segregation Principle (ISP)
 // Author: Sarafat Karim
 //         Undergraduate Student
 //         Khulna University
@@ -75,7 +75,7 @@ class Computer implements NetworkDevice, PrinterDevice {
 /**
  * Demonstrates the usage of a computer that can connect to both a network and a printer.
  */
-class ISPExample {
+class ISP {
     public static void main(String[] args) {
         // Create a computer and connect it to the network and printer
         Computer computer = new Computer();
