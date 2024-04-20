@@ -1,5 +1,5 @@
 //****************************************************************************
-// Title : Demonstrating the Single Responsibility Principle (SRP) in Java
+// Title : Demonstrating the Open/Closed Principle (OCP) in Java
 // Author: Sarafat Karim
 //         Undergraduate Student
 //         Khulna University
