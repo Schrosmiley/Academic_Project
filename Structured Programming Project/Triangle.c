@@ -49,7 +49,7 @@ void addAdjacent(int u, int v, int cost) {
 }
 
 // Function to read the graph data from the user
-void read_graph() {
+void readGraph() {
     valid = 1;
     printf("\t\tEnter the number of nodes : ");
     scanf("%d", &n);
@@ -142,7 +142,7 @@ int main() {
         switch (choice) {
             case 1:
                 if (valid == 0)
-                    read_graph(); // Read the graph data from the user
+                    readGraph(); // Read the graph data from the user
                 else
                     printf("\n\t\tGraph is already read.");
                 break;

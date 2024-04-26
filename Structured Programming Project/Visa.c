@@ -46,7 +46,7 @@ void addAdjacent(int u, int v, int cost) {
 }
 
 // Function to read the graph data from the user
-void read_graph() {
+void readGraph() {
     valid = 1;
     printf("\t\tEnter the number of nodes : ");
     scanf("%d", &n);
@@ -64,7 +64,7 @@ void read_graph() {
 }
 
 // Function to add a path to the paths array
-void add_path() {
+void addPath() {
     int i = 0, j = 0, cost = 0;
     paths[totalPath][i] = src;
     for (i = 1; j < visit_count; i++, j++) {
@@ -78,7 +78,7 @@ void add_path() {
 }
 
 // Function to check if a node is visited
-int is_visited(int x) {
+int isVisited(int x) {
     for (int i = 0; i < visit_count; i++) {
         if (visited[i] == x)
             return 1; // Node is already visited
@@ -87,7 +87,7 @@ int is_visited(int x) {
 }
 
 // Function to check if a node can be visited based on visa
-int can_go(int v) {
+int canGo(int v) {
     for (int i = 0; i < arr[src].visaCount; i++) {
         if (arr[src].visas[i] == v) {
             return 1; // Node can be visited based on visa
@@ -111,7 +111,7 @@ int minCost() {
     return ans;
 }
 
-void MinpathIndex() {
+void minPathIndex() {
     int ans = 10000000; // Initialize the answer with a large value
     for (int i = 0; i < totalPath; i++) {
         if (pathCost[i] < ans) {
@@ -124,7 +124,7 @@ void MinpathIndex() {
 // Function to find all paths from start to end
 void findPath(int start, int end) {
     if (visited[visit_count - 1] == end) {
-        add_path(); // If the destination is reached, add the path to the paths array
+        addPath(); // If the destination is reached, add the path to the paths array
     }
     int index = 0;
     for (int i = 0; i < nodeCount; i++) {
@@ -135,7 +135,7 @@ void findPath(int start, int end) {
     }
 
     for (int i = 0; i < arr[index].adjcount; i++) {
-        if (!is_visited(arr[index].adjs[i]) && can_go(arr[index].adjs[i])) {
+        if (!isVisited(arr[index].adjs[i]) && canGo(arr[index].adjs[i])) {
             visited[visit_count] = arr[index].adjs[i];
             vis_cost[visit_count++] = arr[index].costs[i];
             findPath(arr[index].adjs[i], end); // Recursively explore the adjacent nodes
@@ -164,7 +164,7 @@ int main() {
         switch (choice) {
             case 1:
                 if (valid == 0)
-                    read_graph(); // Read the graph data from the user
+                    readGraph(); // Read the graph data from the user
                 else
                     printf("\t\tGraph is already read.");
                 break;
